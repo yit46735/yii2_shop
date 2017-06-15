@@ -47,6 +47,15 @@ return [
             ],
         ],
 
+        'qiniu'=>[
+            'class'=>\backend\components\Qiniu::className(),
+            'up_host'=>'http://up-z2.qiniu.com',
+            'accessKey'=>'fUm08Ofoz7GcWpWUoZUqunjem5ze0BAM31zh3per',
+            'secretKey'=>'2dq9k-0pbkApZaSUzd7RG7PB2bQAR6xT0ro5d1wg',
+            'bucket'=>'myqiniuyun',
+            'domain'=>'http://or9q1t9s8.bkt.clouddn.com/',
+        ],
+
     ],
     'params' => $params,
 ];

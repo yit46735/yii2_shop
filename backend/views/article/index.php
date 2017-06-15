@@ -28,6 +28,7 @@
                         <td><?=\backend\models\Article::$status[$articleList->status]?></td>
                         <td><?=date('Y-m-d H:i:s',$articleList->create_time)?></td>
                         <td>
+                            <?=\yii\helpers\Html::a('文章详情',['article/view','id'=>$articleList->id],['class'=>'btn btn-success btn-xs'])?>
                             <?=\yii\helpers\Html::a('编辑',['article/edit','id'=>$articleList->id],['class'=>'btn btn-info btn-xs'])?>
                             <?=\yii\helpers\Html::a('删除',['article/delete','id'=>$articleList->id],['class'=>'btn btn-danger btn-xs'])?>
                         </td>

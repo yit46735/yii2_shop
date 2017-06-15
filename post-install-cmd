@@ -1,0 +1,37 @@
+Yii Application Initialization Tool v1.0
+
+
+  Start initialization ...
+
+      exist backend/config/main-local.php
+            ...overwrite? [Yes|No|All|Quit]        skip backend/config/main-local.php
+  unchanged backend/config/params-local.php
+  unchanged backend/config/test-local.php
+  unchanged backend/web/index-test.php
+  unchanged backend/web/index.php
+      exist common/config/main-local.php
+            ...overwrite? [Yes|No|All|Quit]        skip common/config/main-local.php
+  unchanged common/config/params-local.php
+  unchanged common/config/test-local.php
+  unchanged console/config/main-local.php
+  unchanged console/config/params-local.php
+      exist frontend/config/main-local.php
+            ...overwrite? [Yes|No|All|Quit]        skip frontend/config/main-local.php
+  unchanged frontend/config/params-local.php
+  unchanged frontend/config/test-local.php
+  unchanged frontend/web/index-test.php
+  unchanged frontend/web/index.php
+  unchanged yii
+  unchanged yii_test
+  unchanged yii_test.bat
+   generate cookie validation key in backend/config/main-local.php
+   generate cookie validation key in frontend/config/main-local.php
+      chmod 0777 backend/runtime
+      chmod 0777 backend/web/assets
+      chmod 0777 frontend/runtime
+      chmod 0777 frontend/web/assets
+      chmod 0755 yii
+      chmod 0755 yii_test
+
+  ... initialization completed.
+

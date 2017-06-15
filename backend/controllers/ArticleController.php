@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\Article;
 use backend\models\ArticleCategory;
+use backend\models\ArticleDetail;
 use yii\web\Request;
 
 class ArticleController extends \yii\web\Controller
@@ -16,35 +17,38 @@ class ArticleController extends \yii\web\Controller
     }
 
     public function actionAdd(){
-        $model=new Article();
-        $article_category=ArticleCategory::find()->all();
-        $request=new Request();
-        if($request->isPost){
-            $model->load($request->post());
-            if($model->validate()){
-                $model->save();
-                \Yii::$app->session->setFlash('success','添加成功');
-                return $this->redirect(['article/index']);
-            }
-        }
+        $article = new Article();
+        $article_detail = new ArticleDetail();
+        if($article->load(\Yii::$app->request->post())
+            && $article_detail->load(\Yii::$app->request->post())
+            && $article->validate()
+            && $article_detail->validate()){
+            $article->save();
+            $article_detail->article_id = $article->id;
+            $article_detail->save();
 
-        return $this->render('add',['model'=>$model,'article_category'=>$article_category]);
+            \Yii::$app->session->setFlash('success','文章添加成功');
+            return $this->redirect(['index']);
+        }
+        return $this->render('add',['article'=>$article,'article_detail'=>$article_detail]);
     }
 
     public function actionEdit($id){
-        $model=Article::findOne($id);
-        $article_category=ArticleCategory::find()->all();
-        $request=new Request();
-        if($request->isPost){
-            $model->load($request->post());
-            if($model->validate()){
-                $model->save();
-                \Yii::$app->session->setFlash('success','添加成功');
-                return $this->redirect(['article/index']);
-            }
+        $article = Article::findOne(['id'=>$id]);
+        $article_detail = $article->detail;
+        if($article->load(\Yii::$app->request->post())
+            && $article_detail->load(\Yii::$app->request->post())
+            && $article->validate()
+            && $article_detail->validate()){
+            $article->save();
+            $article_detail->save();
+
+
+            \Yii::$app->session->setFlash('success','文章修改成功');
+            return $this->redirect(['index']);
         }
 
-        return $this->render('add',['model'=>$model,'article_category'=>$article_category]);
+        return $this->render('add',['article'=>$article,'article_detail'=>$article_detail]);
 
     }
 
@@ -54,6 +58,32 @@ class ArticleController extends \yii\web\Controller
         $model->save();
         \Yii::$app->session->setFlash('success','删除成功');
         return $this->redirect(['article/index']);
+    }
+
+    public function actionView($id)
+    {
+        $model = Article::findOne($id);
+
+        return $this->render('view',['model'=>$model]);
+    }
+
+
+
+
+
+    //百度编辑器
+    public function actions()
+    {
+        return [
+
+            'ueditor' => [
+                'class' => 'crazyfd\ueditor\Upload',
+                'config'=>[
+                    'uploadDir'=>date('Y/m/d')
+                ]
+
+            ],
+        ];
     }
 
 }

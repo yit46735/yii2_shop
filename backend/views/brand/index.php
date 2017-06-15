@@ -36,5 +36,12 @@
         <a href="<?=\yii\helpers\Url::to(['brand/add'])?>" class="btn btn-primary">添加</a>
     </div>
 </div>
+<?=\yii\widgets\LinkPager::widget([
+    'pagination'=>$page,
+    'nextPageLabel'=>'下一页',
+    'prevPageLabel'=>'上一页',
+    'firstPageLabel'=>'首页',
+    'lastPageLabel'=>'末页',
+]);
 
 
