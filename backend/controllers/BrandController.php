@@ -116,9 +116,16 @@ class BrandController extends \yii\web\Controller
                     $imgUrl=$action->getWebUrl();
                     //调用七牛云插件，图片上传至七牛云服务器
                     $qiniu=\Yii::$app->qiniu;
-                    $qiniu->uploadFile(\Yii::getAlias('@webroot').$imgUrl,$imgUrl);
-                    $url = $qiniu->getLink($imgUrl);
+                    //将图片上穿到七牛云
+                    $qiniu->uploadFile($action->getSavePath(),$action->getWebUrl());
+                    //获取上传到七牛云的地址
+                    $url = $qiniu->getLink($action->getWebUrl());
+                    //将地址给那个uoloadfiy插件
                     $action->output['fileUrl'] = $url;
+
+//                    $qiniu->uploadFile(\Yii::getAlias('@webroot').$imgUrl,$imgUrl);
+//                    $url = $qiniu->getLink($imgUrl);
+//                    $action->output['fileUrl'] = $url;
 //                    $action->getFilename(); // "image/yyyymmddtimerand.jpg"
 //                    $action->getWebUrl(); //  "baseUrl + filename, /upload/image/yyyymmddtimerand.jpg"
 //                    $action->getSavePath(); // "/var/www/htdocs/upload/image/yyyymmddtimerand.jpg"
