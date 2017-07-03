@@ -26,8 +26,8 @@
                         <td><?=$brandList->sort?></td>
                         <td><?=\backend\models\Brand::$status[$brandList->status]?></td>
                         <td>
-                            <?=\yii\helpers\Html::a('编辑',['brand/edit','id'=>$brandList->id],['class'=>'btn btn-info btn-xs'])?>
-                            <?=\yii\helpers\Html::a('删除',['brand/delete','id'=>$brandList->id],['class'=>'btn btn-danger btn-xs'])?>
+                            <?=\Yii::$app->user->can('brand/edit')?\yii\helpers\Html::a('编辑',['brand/edit','id'=>$brandList->id],['class'=>'btn btn-info btn-xs']):''?>
+                            <?=\Yii::$app->user->can('brand/delete')?\yii\helpers\Html::a('删除',['brand/delete','id'=>$brandList->id],['class'=>'btn btn-danger btn-xs']):''?>
                         </td>
                     </tr>
                 <?php endforeach;?>

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\filters\RbacFilter;
 use backend\models\GoodsCategory;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
@@ -67,6 +68,14 @@ class GoodsCategoryController extends \yii\web\Controller
 
 
         return $this->render('add',['model'=>$model,'categories'=>$categories]);
+    }
+
+    public function behaviors(){
+        return [
+            'RbacFilter'=>[
+                'class'=>RbacFilter::className(),
+            ],
+        ];
     }
 
 

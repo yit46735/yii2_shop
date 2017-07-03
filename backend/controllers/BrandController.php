@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\filters\RbacFilter;
 use backend\models\Brand;
 use yii\data\Pagination;
 use yii\web\Request;
@@ -122,6 +123,16 @@ class BrandController extends \yii\web\Controller
 //                    $action->getWebUrl(); //  "baseUrl + filename, /upload/image/yyyymmddtimerand.jpg"
 //                    $action->getSavePath(); // "/var/www/htdocs/upload/image/yyyymmddtimerand.jpg"
                 },
+            ],
+
+        ];
+    }
+
+    public function behaviors(){
+        return [
+            'RbacFilter'=>[
+                'class'=>RbacFilter::className(),
+                'only'=>['add','index','edit','delete'],
             ],
         ];
     }

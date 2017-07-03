@@ -9,5 +9,6 @@ if($model->photo){
     echo \yii\helpers\Html::img($model->photo);
 }
 echo $form->field($model,'gender',['inline'=>true])->radioList(\backend\models\Admin::$status);
+echo $form->field($model,'roles')->checkboxList(\backend\models\UserForm::getRoleOptions());
 echo \yii\bootstrap\Html::submitButton('提交',['class'=>'btn btn-info']);
 \yii\bootstrap\ActiveForm::end();

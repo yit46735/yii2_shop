@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\filters\RbacFilter;
 use backend\models\Article;
 use backend\models\ArticleCategory;
 use backend\models\ArticleDetail;
@@ -65,6 +66,15 @@ class ArticleController extends \yii\web\Controller
         $model = Article::findOne($id);
 
         return $this->render('view',['model'=>$model]);
+    }
+
+    public function behaviors(){
+        return [
+            'RbacFilter'=>[
+                'class'=>RbacFilter::className(),
+                'only'=>['add','index','edit','delete','view'],
+            ],
+        ];
     }
 
 

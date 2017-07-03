@@ -26,8 +26,8 @@
                         <td><?=\backend\models\ArticleCategory::$status[$categoryList->status]?></td>
                         <td><?=$categoryList->is_help?></td>
                         <td>
-                            <?=\yii\helpers\Html::a('编辑',['article-category/edit','id'=>$categoryList->id],['class'=>'btn btn-info btn-xs'])?>
-                            <?=\yii\helpers\Html::a('删除',['article-category/delete','id'=>$categoryList->id],['class'=>'btn btn-danger btn-xs'])?>
+                            <?=\Yii::$app->user->can('article-category/edit')?\yii\helpers\Html::a('编辑',['article-category/edit','id'=>$categoryList->id],['class'=>'btn btn-info btn-xs']):''?>
+                            <?=\Yii::$app->user->can('article-category/delete')?\yii\helpers\Html::a('删除',['article-category/delete','id'=>$categoryList->id],['class'=>'btn btn-danger btn-xs']):''?>
                         </td>
                     </tr>
                 <?php endforeach;?>

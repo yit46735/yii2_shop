@@ -56,8 +56,8 @@
                         <td>
                             <?=\yii\helpers\Html::a('商品详情',['goods/view','id'=>$goodsList->id],['class'=>'btn btn-success btn-xs'])?>
                             <?=\yii\helpers\Html::a('商品相册',['goods/gallery','id'=>$goodsList->id],['class'=>'btn btn-primary btn-xs'])?><br/><br/>
-                            <?=\yii\helpers\Html::a('编辑',['goods/edit','id'=>$goodsList->id],['class'=>'btn btn-info btn-xs'])?>
-                            <?=\yii\helpers\Html::a('删除',['goods/delete','id'=>$goodsList->id],['class'=>'btn btn-danger btn-xs'])?>
+                            <?=\Yii::$app->user->can('goods/edit')?\yii\helpers\Html::a('编辑',['goods/edit','id'=>$goodsList->id],['class'=>'btn btn-info btn-xs']):''?>
+                            <?=\Yii::$app->user->can('goods/delete')?\yii\helpers\Html::a('删除',['goods/delete','id'=>$goodsList->id],['class'=>'btn btn-danger btn-xs']):''?>
                         </td>
                     </tr>
                 <?php endforeach;?>

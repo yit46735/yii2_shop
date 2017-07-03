@@ -22,8 +22,8 @@
                         <td><?=$model->parent_id?$model->parent->name:'顶级分类'?></td>
                         <td><?=$model->intro?></td>
                         <td>
-                            <?=\yii\helpers\Html::a('编辑',['goods-category/edit','id'=>$model->id],['class'=>'btn btn-info btn-xs'])?>
-                            <?=\yii\helpers\Html::a('删除',['goods-category/delete','id'=>$model->id],['class'=>'btn btn-danger btn-xs'])?>
+                            <?=\Yii::$app->user->can('goods-category/edit')?\yii\helpers\Html::a('编辑',['goods-category/edit','id'=>$model->id],['class'=>'btn btn-info btn-xs']):''?>
+                            <?=\Yii::$app->user->can('goods-category/delete')?\yii\helpers\Html::a('删除',['goods-category/delete','id'=>$model->id],['class'=>'btn btn-danger btn-xs']):''?>
                         </td>
                     </tr>
                 <?php endforeach;?>

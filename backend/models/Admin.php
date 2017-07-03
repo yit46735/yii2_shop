@@ -2,6 +2,7 @@
 namespace backend\models;
 
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 class Admin extends ActiveRecord implements IdentityInterface{
@@ -9,6 +10,7 @@ class Admin extends ActiveRecord implements IdentityInterface{
     public $password;//保存密码的明文
     public $imgFile;
     public static $status=[1=>'男',0=>'女'];
+    public $roles=[];
 
     const SCENARIO_ADD = 'add';
 
@@ -24,6 +26,7 @@ class Admin extends ActiveRecord implements IdentityInterface{
             [['username'], 'unique'],
             ['imgFile','file','extensions'=>['jpg','gif','png']],
             ['imgFile','file','skipOnEmpty'=>false,'on'=>self::SCENARIO_ADD],
+            ['roles','safe'],
 
         ];
     }
@@ -39,7 +42,31 @@ class Admin extends ActiveRecord implements IdentityInterface{
             'status' => '状态',
             'gender'=>'性别',
             'imgFile'=>'头像',
+            'roles'=>'角色',
         ];
+    }
+
+    public static function getRoleOptions(){
+        return ArrayHelper::map(\Yii::$app->authManager->getRoles(),'name','description');
+    }
+
+    public function userToRole($id){
+        $authManager = \Yii::$app->authManager;
+        \Yii::$app->authManager->revokeAll($id);
+        if($this->roles!=null){
+
+            foreach($this->roles as $roleName){
+                $role=$authManager->getRole($roleName);
+                $authManager->assign($role,$id);
+            }
+        }
+        return true;
+    }
+
+    public function loadData($id){
+        foreach(\Yii::$app->authManager->getRolesByUser($id) as $role){
+            $this->roles[]=$role->name;
+        }
     }
 
     public function beforeSave($insert)

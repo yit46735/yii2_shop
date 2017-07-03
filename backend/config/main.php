@@ -7,7 +7,7 @@ $params = array_merge(
 );
 
 return [
-    'defaultRoute'=>'brand',
+    'defaultRoute'=>'admin',
     'language'=>'zh-CN',
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
@@ -19,9 +19,11 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
+//            'class'=>\yii\web\User::className(),
             'identityClass' => \backend\models\Admin::className(),
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'loginUrl'=>['admin/login'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend

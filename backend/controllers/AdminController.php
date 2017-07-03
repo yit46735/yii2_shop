@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use backend\filters\RbacFilter;
 use backend\models\Admin;
 use backend\models\ChangeForm;
 use backend\models\LoginForm;
+use backend\models\UserForm;
 use yii\web\Request;
 use yii\web\UploadedFile;
 
@@ -30,8 +32,12 @@ class AdminController extends \yii\web\Controller
                     $model->photo = $filename;
                 }
                 $model->save(false);
-                \Yii::$app->session->setFlash('success','添加成功');
-                return $this->redirect(['admin/index']);
+                $id=$model->id;
+                if($model->userToRole($id)){
+                    \Yii::$app->session->setFlash('success','添加成功');
+                    return $this->redirect(['admin/index']);
+                }
+
             } else {
                 var_dump($model->getErrors());
                 exit;
@@ -43,6 +49,7 @@ class AdminController extends \yii\web\Controller
 
     public function actionEdit($id){
         $model=Admin::findOne($id);
+        $model->loadData($id);
         $request = new Request();
         if($request->isPost){
             $model->load($request->post());
@@ -55,8 +62,11 @@ class AdminController extends \yii\web\Controller
                     $model->photo = $filename;
                 }
                 $model->save(false);
-                \Yii::$app->session->setFlash('success','修改成功');
-                return $this->redirect(['admin/index']);
+                if($model->userToRole($id)){
+                    \Yii::$app->session->setFlash('success','修改成功');
+                    return $this->redirect(['admin/index']);
+                }
+
             } else {
                 var_dump($model->getErrors());
                 exit;
@@ -109,11 +119,19 @@ class AdminController extends \yii\web\Controller
         $admin->status=1;
         $admin->save();
         \Yii::$app->user->logout();
+        \Yii::$app->session->setFlash('success','成功');
         return $this->redirect(['admin/index']);
     }
 
-    public function actionTest(){
-        var_dump(\Yii::$app->user->isGuest);
+    public function behaviors(){
+        return [
+            'RbacFilter'=>[
+                'class'=>RbacFilter::className(),
+                'only'=>['add','index'],
+            ],
+        ];
     }
+
+
 
 }
